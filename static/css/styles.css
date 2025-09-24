@@ -1,0 +1,44 @@
+/* Custom animations and modern UI enhancements */
+
+/* Keyframes */
+@keyframes fade-in {
+  from { opacity: 0; transform: translateY(4px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes slide-down {
+  from { opacity: 0; transform: translateY(-8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Utility animation classes */
+.animate-fade-in { animation: fade-in 420ms ease-out both; }
+.animate-slide-down { animation: slide-down 320ms ease-out both; }
+
+/* Smooth hover lift for cards */
+.service-card, .category-card, .card.shadow, .card.h-100 {
+  transition: transform 220ms ease, box-shadow 220ms ease;
+}
+.service-card:hover, .category-card:hover, .card.h-100:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.12);
+}
+
+/* Buttons micro-interactions */
+.btn {
+  transition: transform 120ms ease, box-shadow 120ms ease;
+}
+.btn:active { transform: translateY(1px) scale(0.99); }
+
+/* Navbar glass effect */
+.sticky-top.gradient-custom {
+  backdrop-filter: saturate(140%) blur(8px);
+}
+
+/* Image styling */
+.card-img-top { filter: saturate(1.05) contrast(1.02); }
+
+/* Footer subtle border */
+footer { border-top: 1px solid rgba(255,255,255,0.08); }
+
+

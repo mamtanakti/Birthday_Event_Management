@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Invoice #{{ order.order_number }}</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            color: #333;
+        }
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+            border-bottom: 2px solid #007bff;
+            padding-bottom: 20px;
+        }
+        .invoice-info {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 30px;
+        }
+        .table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 30px;
+        }
+        .table th, .table td {
+            border: 1px solid #ddd;
+            padding: 12px;
+            text-align: left;
+        }
+        .table th {
+            background-color: #f8f9fa;
+        }
+        .total-row { background-color: #f8f9fa; font-weight: bold; }
+        .muted { color: #666; }
+        .footer {
+            margin-top: 50px;
+            text-align: center;
+            color: #666;
+            font-size: 12px;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>ServiceHub - Invoice</h1>
+        <p>Order #{{ order.order_number }}</p>
+    </div>
+
+    <div class="invoice-info">
+        <div>
+            <h3>Billed To:</h3>
+            <p><strong>{{ order.user.get_full_name|default:order.user.username }}</strong><br>
+            {{ order.user.email }}<br>
+            {% if order.user.phone_number %}{{ order.user.phone_number }}{% endif %}</p>
+        </div>
+        <div>
+            <h3>Invoice Details:</h3>
+            <p><strong>Invoice Date:</strong> {{ order.created_at|date:"F d, Y" }}<br>
+            <strong>Order Date:</strong> {{ order.created_at|date:"F d, Y H:i" }}<br>
+            <strong>Status:</strong> {{ order.status|title }}</p>
+        </div>
+    </div>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Service</th>
+                <th>Category</th>
+                <th>Quantity</th>
+                <th>Unit Price</th>
+                <th>Total</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for item in order.items.all %}
+            <tr>
+                <td>{{ item.service.title }}</td>
+                <td>{{ item.service.category.title }}</td>
+                <td>{{ item.quantity }}</td>
+                <td>${{ item.price }}</td>
+                <td>${{ item.subtotal }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+        <tfoot>
+            <tr class="total-row">
+                <td colspan="4" style="text-align: right;">Grand Total:</td>
+                <td>${{ order.total_amount }}</td>
+            </tr>
+        </tfoot>
+    </table>
+
+    <div class="footer">
+        <p>Thank you for your business!<br>
+        ServiceHub - Your trusted service provider<br>
+        Contact: support@servicehub.com | Phone: (555) 123-4567</p>
+    </div>
+</body>
+</html>
