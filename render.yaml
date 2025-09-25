@@ -1,0 +1,11 @@
+services:
+  - type: web
+    name: service_project
+    runtime: python
+    buildCommand: |
+      pip install -r requirements.txt
+      python manage.py collectstatic --noinput
+    startCommand: gunicorn service_project.wsgi:application
+    envVars:
+      - key: DJANGO_SETTINGS_MODULE
+        value: service_project.settings
